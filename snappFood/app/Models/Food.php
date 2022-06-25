@@ -9,8 +9,11 @@ class Food extends Model
 {
     use HasFactory;
 
-    public function resturants()
+    public function categories()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Category::class);
+    }
+    public function discounts(){
+    return $this->belongsTo(Discount::class);
     }
 }

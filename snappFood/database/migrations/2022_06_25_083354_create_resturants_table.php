@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('resturants', function (Blueprint $table) {
             $table->increments('id');
-
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Category::class);
+
             $table->string('name');
             $table->string('phone');
+            $table->boolean('is_open');
             $table->string('bankAccount');
 
             $table->timestamps();

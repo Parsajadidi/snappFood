@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('is_admin')->default(false);
-            $table->boolean('is_resturant')->default(true);
+            $table->enum('role',['seller','admin','buyer'])->default('seller');
             $table->rememberToken();
             $table->timestamps();
         });

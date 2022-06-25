@@ -9,9 +9,13 @@ class Category extends Model
 {
     use HasFactory;
 
-    public function categorizable(){
+    public function resturants(){
 
-        return $this->morphMany(Resturant::class,'resturants');
+        return $this->hasMany(Resturant::class,);
         }
+        public function food(){
+
+            return $this->hasMany(Food::class,);
+            }
       
 }

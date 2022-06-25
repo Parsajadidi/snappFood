@@ -20,6 +20,10 @@ return new class extends Migration
             $table->integer('price');
             $table->boolean('is_foodParty');
             $table->foreignIdFor(Discount::class);
+            $table->foreignIdFor(Category::class);
+
+            $table->integer('addressable_id');
+            $table->string('addressable_type');
             $table->timestamps();
         });
     }

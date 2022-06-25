@@ -9,9 +9,12 @@ class Resturant extends Model
 {
     use HasFactory;
 
-    public function resturants()
+    public function categories()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Category::class);
     }
-    
+    public function addressable()
+    {
+        return $this->morphMany(Address::class, 'addressable');
+    }
 }
