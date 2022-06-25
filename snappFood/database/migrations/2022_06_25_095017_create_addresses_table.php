@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('latitiude');
             $table->string('longitude');
-            $table->increments('addressable_id');
+            $table->integer('addressable_id');
             $table->string('addressable_type');
             $table->timestamps();
         });
