@@ -15,11 +15,12 @@ class Category extends Model
 
     public function resturants(){
 
-        return $this->hasMany(Resturant::class,);
+        return $this->hasMany(Resturant::class);
         }
+
         public function food(){
 
-            return $this->hasMany(Food::class,);
+            return $this->hasMany(Food::class);
             }
       
 }

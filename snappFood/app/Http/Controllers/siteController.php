@@ -31,5 +31,8 @@ class siteController extends Controller
         return view('admin/adminDiscount',compact('discounts'));
     
     }
+    public function showResturantHome(){
+    return view('resturant/resturantHome');
+    }
    
 }

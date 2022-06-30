@@ -31,7 +31,7 @@ edit
                             <td class="text-lg font-sans text-slate-50   text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                <form action="/admin/discount/edit/save" method="POST">
                                    @csrf
-                                   <input class="text-gray-900 " name="discountPercent" type="number" placeholder="   Edit discountPercent">
+                                   <input class="text-gray-900 " name="discountPercent" type="number" value="{{$myDiscount[0]->discountPercent}}">
                             </td>
                   
 

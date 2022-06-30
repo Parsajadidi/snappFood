@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\siteController;
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\resturantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,13 @@ Route::post('/admin/discount/add',[adminController::class,'addDiscount']);
 Route::post('/admin/discount/delete',[adminController::class,'deleteDiscount']);
 Route::post('/admin/discount/edit',[adminController::class,'editDisount']);
 Route::post('/admin/discount/edit/save',[adminController::class,'editDiscountSave']);
+
+
+Route::get('/resturant/home',[siteController::class,'showResturantHome'])->name('resturantHome');
+Route::get('/resturant/profile',[resturantController::class,'showResturantProfile']);
+Route::post('/resturant/profile/save',[resturantController::class,'ResturantProfile']);
+Route::get('/resturant/menu',[resturantController::class,'showResturantMenu'])->name('resturantMenu');
+Route::get('/resturant/add/food',[resturantController::class,'showResturantAddFood']);
+Route::post('/resturant/add/food/save',[resturantController::class,'ResturantAddFood']);
+Route::post('/resturant/menu/delete/food',[resturantController::class,'ResturantDeleteFood']);
+
