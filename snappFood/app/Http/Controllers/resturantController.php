@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Discount;
 use App\Models\Food;
 use App\Models\Resturant;
 use Illuminate\Http\Request;
@@ -49,18 +50,28 @@ class resturantController extends Controller
 
         return view('resturant/resturantHome');
     }
-    public function showResturantMenu(){
+    public function showResturantMenu(Request $request){
 
         // $foods=DB::table('food')
         // ->where('resturant_id','=','1')
         // ->select('*')
         // ->get();
         // dd($foods);
-       $foods =Food::all()->load('category');
+        $category=$request->get('category');
+       $foods =Food::all()
+      // ->where('category_id','=',$category)
+       ->load('category')
+       ->load('discount');
+
+       $category=DB::table('categories')
+       ->select('*')
+       ->where("type",'=','food')
+       ->get()
+       ->toArray();
         // return $foods;
        // dd($foods);
     
-    return view('resturant/resturantMenu',compact('foods'));
+    return view('resturant/resturantMenu',['category'=>$category],compact('foods'));
     }
     public function showResturantAddFood(){
         $categories=DB::table('categories')
@@ -108,5 +119,19 @@ class resturantController extends Controller
         ->delete();
 
         return redirect()->route('resturantMenu');
+    }
+    public function ResturantEditFood(request $request){
+        $food_id=$request->get('food_id');
+        $food =Food::all()
+        ->where('id','=',$food_id)
+        ->load('category')
+        ->load('discount');
+        dd($food->category->name);
+        $category =Category::all();
+        $discount =Discount::all();
+
+        $data=[$food,$category,$discount];
+        //dd($discount);
+        return view('resturant/editFood',compact('data'));
     }
 }
