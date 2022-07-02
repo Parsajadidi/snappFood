@@ -28,4 +28,7 @@ class Food extends Model
     public function discount(){
     return $this->belongsTo(Discount::class);
     }
+    public function rasturant(){
+    return $this->belongsTo(Resturant::class);
+    }
 }

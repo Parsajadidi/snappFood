@@ -44,8 +44,8 @@ class resturantController extends Controller
             'phone'=>$phone,
             'bankAccount'=>$bankAccount,
             'category_id'=>$type,
-            'user_id'=>1,
-            'is_open'=>0,
+            'user_id'=>auth()->user()->id,
+            'is_open'=>1,
         ]);
 
         return view('resturant/resturantHome');
@@ -59,9 +59,11 @@ class resturantController extends Controller
         // dd($foods);
         $category=$request->get('category');
        $foods =Food::all()
-      // ->where('category_id','=',$category)
        ->load('category')
        ->load('discount');
+       // ->where('category_id','=',$category)
+       
+       //Food::query()->find()->resturant()->find(session("resturant_id"));
 
        $category=DB::table('categories')
        ->select('*')

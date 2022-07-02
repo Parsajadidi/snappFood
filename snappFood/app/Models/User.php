@@ -43,7 +43,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     /* relations*/
-    public function addressable()
+    public function addresses()
     {
         return $this->morphMany(Address::class, 'addressable');
     }

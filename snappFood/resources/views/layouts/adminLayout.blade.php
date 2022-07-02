@@ -8,8 +8,13 @@
 
     <title>$yield('title')</title>
 </head>
-<body class="bg-slate-600">
-@yield('content')
+<body >
+<x-app-layout>
+    <x-slot name="header">
+      
+    </x-slot>
+    @yield('content')
+</x-app-layout>
 
 </body>
 </html>

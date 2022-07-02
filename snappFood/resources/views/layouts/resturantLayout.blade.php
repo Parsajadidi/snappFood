@@ -12,7 +12,16 @@
     <title>$yield('title')</title>
 </head>
 <body class="bg-teal-800">
-@yield('content')
+<div class="h-1/2">
+<x-app-layout>
+    <x-slot name="header">
+      
+    </x-slot>
+    @yield('content')
+</x-app-layout>
+</div>
+
+
 
 </body>
 </html>

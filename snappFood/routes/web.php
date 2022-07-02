@@ -22,7 +22,14 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return redirect()->route('resturantHome');
+    if(auth()->user()->role=='seller'){
+
+        return redirect()->route('resturantHome');
+    }elseif(auth()->user()->role=='admin'){
+
+        return redirect()->route('adminHome');
+    }
+
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

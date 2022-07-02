@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\resturantController;
 
 /*
@@ -14,13 +16,36 @@ use App\Http\Controllers\API\resturantController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/api/restaurants',[resturantController::class,'index']);
-Route::get('/api/restaurant/{id}',[resturantController::class,'show']);
-Route::get('/api/restaurants/{resturant_id}/foods',[resturantController::class,'food']);
+
+//login & register
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+//resturants information
+Route::get('/resturants',[resturantController::class,'index']);
+Route::get('/resturant/{id}',[resturantController::class,'show']);
+Route::get('/resturants/{resturant_id}/foods',[resturantController::class,'food']);
 
 
+//auth with sanctum
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    //address for user
+    Route::get('/addresses',[AddressController::class,'index']);
+    Route::post('/addresses',[AddressController::class,'store']);
+    Route::post('/addresses/{address_id}',[AddressController::class,'setActiveAddress']);
 
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//logout
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+
+
+
+
+
+
+
+
+
+
+
