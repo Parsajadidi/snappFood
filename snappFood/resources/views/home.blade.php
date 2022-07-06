@@ -12,11 +12,13 @@
     <!-- Header icon and text -->
     <h1 class="font-bold font-sans text-white">SnappFood</h1>
   </div>
+  @guest
   <div class="hidden md:block flex items-center space-x-4">
     <a href="/login" class="no-underline text-blue-100 font-semibold hover:text-blue-200">login</a>
     <a href="/register" class="no-underline text-blue-100 font-semibold hover:text-blue-200">register</a>
   </div>
 </div>
+@endguest
 </nav>
 
 

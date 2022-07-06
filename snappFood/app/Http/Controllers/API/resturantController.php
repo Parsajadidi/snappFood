@@ -37,21 +37,22 @@ class resturantController extends Controller
     }
     public function food($resturant_id){
     
-        $foods=Food::with(['category','discount'])->where('resturant_id',$resturant_id);
+        $foods=Food::with(['category','discount'])->where('resturant_id',$resturant_id)->get();
         //->load('category','discount');
         // $foods=Food::all();
+       // dd($foods);
+        
+        // $response=[
+        // 'name'=>$foods->name,
+        // 'price'=>$foods->price,
+        // 'description'=>$foods->description,
+        // 'is_foodParty'=>$foods->is_foodParty,
+        // 'category'=>$foods->category->name,
+        // 'disount'=>$foods->discount->discountPercent,
 
-        $response=[
-        'name'=>$foods->name,
-        'price'=>$foods->price,
-        'description'=>$foods->description,
-        'is_foodParty'=>$foods->is_foodParty,
-        'category'=>$foods->category->name,
-        'disount'=>$foods->discount->discountPercent,
-
-        ];
-        return response($response);
-        //return $foods;
+        // ];
+       // return response($response);
+        return $foods;
 
     }
 }

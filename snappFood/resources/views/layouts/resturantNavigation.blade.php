@@ -12,14 +12,20 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('adminHome')" :active="request()->routeIs('adminHome')">
+                    <x-nav-link :href="route('resturantHome')" :active="request()->routeIs('resturantHome')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('adminDiscount')" :active="request()->routeIs('adminDiscount')">
-                        {{ __('DISCOUNT') }}
+                </div>
+                @can('created_resturant')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('resturantMenu')" :active="request()->routeIs('resturantMenu')">
+                        {{ __('MY MENU') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('adminCategory')" :active="request()->routeIs('adminCategory')">
-                        {{ __('CATEGORY') }}
+                </div>
+                @endcan
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('resturantProfile')" :active="request()->routeIs('resturantProfile')">
+                        {{ __('MY PROFILE') }}
                     </x-nav-link>
                 </div>
             </div>

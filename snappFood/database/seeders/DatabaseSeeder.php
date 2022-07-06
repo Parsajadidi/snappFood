@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +22,20 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        DB::table('users')->insert([
+            ['name' => "rasoul",
+            'phone' => "09123",
+            'role' => "admin",
+            'email' => "rasoul@rasoul.com",
+            'password' => Hash::make("123")],
+
+            
+            ['name' => "parsa jadidi",
+            'phone' => "09198215096",
+            'role' => "seller",
+            'email' => "parsajad23@gmail.com",
+            'password' => Hash::make("123")],
+            ]);
     }
 }

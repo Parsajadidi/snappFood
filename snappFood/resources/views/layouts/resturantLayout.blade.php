@@ -11,11 +11,13 @@
 
     <title>$yield('title')</title>
 </head>
-<body class="bg-teal-800">
+<body >
 <div class="h-1/2">
 <x-app-layout>
     <x-slot name="header">
-      
+        
+ 
+                    
     </x-slot>
     @yield('content')
 </x-app-layout>

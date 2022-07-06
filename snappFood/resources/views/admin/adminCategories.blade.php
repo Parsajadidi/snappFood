@@ -47,7 +47,7 @@ categouries
                                 <td class="text-lg font-sans text-slate-50   text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                     {{$category->name}}
                                 </td>
-                                <td class="text-lg font-sans text-slate-50 font-light px-6 py-4 whitespace-nowrap">
+                                <td class="text-lg font-sans text-slate-50   text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                     {{$category->type}}
 
                                 </td>

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/dashboard', function () {
@@ -40,9 +40,9 @@ Route::middleware('auth')->group(function(){
     
 Route::middleware('admin')->group(function(){
 
-    Route::get('/admin/home',[siteController::class,'showAdminHome']);
+    Route::get('/admin/home',[siteController::class,'showAdminHome'])->name('adminHome');
     Route::get('/admin/categories',[siteController::class,'showAdminCategories'])->name('adminCategory');
-    Route::get('/admin/discount',[siteController::class,'showAdminDiscount']);
+    Route::get('/admin/discount',[siteController::class,'showAdminDiscount'])->name('adminDiscount');
     Route::post('/admin/category/add',[adminController::class,'addCategory']);
     Route::post('/admin/category/delete',[adminController::class,'deleteCategory']);
     Route::post('/admin/category/edit',[adminController::class,'editCategory']);
@@ -57,16 +57,15 @@ Route::middleware('seller')->group(function(){
 
 
     Route::get('/resturant/home',[siteController::class,'showResturantHome'])->name('resturantHome');
-    Route::get('/resturant/profile',[resturantController::class,'showResturantProfile']);
+    Route::get('/resturant/profile',[resturantController::class,'showResturantProfile'])->name('resturantProfile');
     Route::post('/resturant/profile/save',[resturantController::class,'ResturantProfile']);
     Route::get('/resturant/menu',[resturantController::class,'showResturantMenu'])->name('resturantMenu');
-    Route::post('/resturant/menu',[resturantController::class,'showResturantMenu']);
+    Route::post('/resturant/menu',[resturantController::class,'ResturantMenu']);
     Route::get('/resturant/add/food',[resturantController::class,'showResturantAddFood']);
     Route::post('/resturant/add/food/save',[resturantController::class,'ResturantAddFood']);
     Route::post('/resturant/menu/delete/food',[resturantController::class,'ResturantDeleteFood']);
     Route::post('/resturant/menu/edit/food',[resturantController::class,'ResturantEditFood']);
-
-
+    Route::post('/resturant/menu/edit/food/save',[resturantController::class,'ResturantEditFoodSave']);
 });
 });
 
@@ -74,6 +73,6 @@ Route::middleware('seller')->group(function(){
 
 
 
-
+//auth()->user()->resturant
 
 // auth()->user()->id;

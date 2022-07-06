@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Schedule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -35,4 +36,7 @@ class Resturant extends Model
     public function foods(){
     return $this->hasMany(Food::class);
     }
+    public function schedule(){
+        return $this->hasOne(Schedule::class);
+        }
 }
