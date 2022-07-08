@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Schedule extends Model
 {
@@ -20,7 +21,7 @@ class Schedule extends Model
         'friday',
     ];
 
-    public function schedule(){
-        return $this->belongsTo(Schedule::class);
+    public function resturant(){
+        return $this->belongsTo(Resturant::class);
         }
 }
