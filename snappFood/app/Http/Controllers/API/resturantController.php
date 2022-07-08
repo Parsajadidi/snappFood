@@ -6,6 +6,7 @@ use App\Models\Food;
 use App\Models\Resturant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Schedule;
 
 class resturantController extends Controller
 {
@@ -27,12 +28,25 @@ class resturantController extends Controller
     
     public function show($id){
         $resturant=Resturant::find($id);
+        $schedule=Schedule::where('resturant_id',$id)->get()->toArray();
+
         $response=[
             'id'=>$resturant->id,
             'name'=>$resturant->name,
-            'category'=>$resturant->category->name
+            'category'=>$resturant->category->name,
+            'phone'=>$resturant->phone,
+            'resturant bank account'=>$resturant->bankAccount,
+            'open status'=>$resturant->is_open,
+            'Open Time:'=>[
+                'saturday'=>$schedule[0]['saturday'],
+                'sunday'=>$schedule[0]['sunday'],
+                'monday'=>$schedule[0]['monday'],
+                'tuesday'=>$schedule[0]['tuesday'],
+                'wednesday'=>$schedule[0]['wednesday'],
+                'thursday'=>$schedule[0]['thursday'],
+                'friday'=>$schedule[0]['friday'],
+            ]
         ];
-       // dd(Resturant::find($id)->category);
         return response($response);
     }
     public function food($resturant_id){
