@@ -13,6 +13,18 @@ use illuminate\Validation\validator;
 
 class resturantController extends Controller
 {
+    public function ResturantStatus(Request $request){
+    
+        $status=$request->get('status');
+        //update status
+        Resturant::where('user_id', auth()->user()->id)->update([
+            'is_open' => $status,
+
+        ]);
+
+        return redirect()->route('resturantHome');
+
+    }
 
     public function showResturantProfile()
     {
@@ -29,17 +41,26 @@ class resturantController extends Controller
     public function ResturantProfile(Request $request)
     {
         //validation
-        $request->validate([
-            'name' => 'required|unique:resturants|max:20',
-            'phone' => 'required|unique:resturants',
-            'bankAccount' => 'required',
-            "type" => 'required',
-            'sat_start' => 'numeric|between:0,24',
-            'sat_end' => 'numeric|between:0,24',
-            'sun_start' => 'numeric|between:0,24',
-            'sun_end' => 'numeric|between:0,24',
-
-        ]);
+        // $request->validate([
+        //     'name' => 'required|unique:resturants|max:20',
+        //     'phone' => 'required|unique:resturants',
+        //     'bankAccount' => 'required',
+        //     "type" => 'required',
+        //     'sat_start' => 'numeric|between:0,24',
+        //     'sat_end' => 'numeric|between:0,24',
+        //     'sun_start' => 'numeric|between:0,24',
+        //     'sun_end' => 'numeric|between:0,24',
+        //     'mon_start' => 'numeric|between:0,24',
+        //     'mon_end' => 'numeric|between:0,24',
+        //     'tue_start' => 'numeric|between:0,24',
+        //     'tue_end' => 'numeric|between:0,24',
+        //     'wed_start' => 'numeric|between:0,24',
+        //     'wed_end' => 'numeric|between:0,24',
+        //     'thu_start' => 'numeric|between:0,24',
+        //     'thu_end' => 'numeric|between:0,24',
+        //     'fri_start' => 'numeric|between:0,24',
+        //     'fri_end' => 'numeric|between:0,24',
+        // ]);
         //info
         $name = $request->get('name');
         $phone = $request->get('phone');
@@ -111,7 +132,7 @@ class resturantController extends Controller
 
 
 
-        return view('resturant/resturantHome');
+        return redirect()->route('resturantHome');
     }
     public function showResturantMenu(Request $request)
     {

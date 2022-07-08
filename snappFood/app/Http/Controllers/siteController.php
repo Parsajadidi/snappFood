@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schedule;
+use App\Models\Resturant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class siteController extends Controller
 {
@@ -32,7 +35,14 @@ class siteController extends Controller
     
     }
     public function showResturantHome(){
-    return view('resturant/resturantHome');
+        
+        if(Gate::allows('created_resturant')){
+            $resturantInfo = Resturant::with('category')->where('user_id', auth()->user()->id)->get();
+            $resturantSchedule=Schedule::where('resturant_id', $resturantInfo[0]->id)->get();
+            $data=[$resturantInfo,$resturantSchedule];
+            return view('resturant/resturantHome',compact('data'));
+        }
+        return view('resturant/resturantHome');
     }
    
 }

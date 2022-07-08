@@ -12,18 +12,15 @@ class resturantController extends Controller
 {
     public function index(){
         
-        $resturants =Resturant::all();
-        foreach($resturants as $resturant){
-              $response[$resturant->id]=[
-            'id'=>$resturant->id,
-            'name'=>$resturant->name,
-            'is_open'=>$resturant->is_open,
-            'category'=>$resturant->category->name
-        ];    
-        }
+        $resturants =collect(Resturant::all());
+         dd($resturants);
+        $resturants->map(function ($value  ,  $key){
+
+            // dd($value->category->name);
+        });
   
 
-    return response($response);
+    // return response($response);
     }
     
     public function show($id){

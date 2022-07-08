@@ -57,6 +57,7 @@ Route::middleware('seller')->group(function(){
 
 
     Route::get('/resturant/home',[siteController::class,'showResturantHome'])->name('resturantHome');
+    Route::post('/resturant/home/update/status',[resturantController::class,'ResturantStatus']);
     Route::get('/resturant/profile',[resturantController::class,'showResturantProfile'])->name('resturantProfile');
     Route::post('/resturant/profile/save',[resturantController::class,'ResturantProfile']);
     Route::get('/resturant/menu',[resturantController::class,'showResturantMenu'])->name('resturantMenu');
@@ -66,6 +67,7 @@ Route::middleware('seller')->group(function(){
     Route::post('/resturant/menu/delete/food',[resturantController::class,'ResturantDeleteFood']);
     Route::post('/resturant/menu/edit/food',[resturantController::class,'ResturantEditFood']);
     Route::post('/resturant/menu/edit/food/save',[resturantController::class,'ResturantEditFoodSave']);
+
 });
 });
 
@@ -73,6 +75,4 @@ Route::middleware('seller')->group(function(){
 
 
 
-//auth()->user()->resturant
 
-// auth()->user()->id;
