@@ -12,89 +12,96 @@ class adminController extends Controller
 {
     public function addCategory(Request $request)
     {
-
+        //data from request
         $categoryName = $request->get('name');
         $categoryType = $request->get('type');
-        //dd($categoryType);
-        //...................
-        // $category = new Category;
-        // $category->name = $categoryName;
-        // $category->type = $categoryType;
-        // $category->save;
+        //insert into DB
         Category::create([
-            'name'=>$categoryName,
-            'type'=>$categoryType
+            'name' => $categoryName,
+            'type' => $categoryType
         ]);
-        //dd($category);
-        //..................................
-        return redirect()->route('adminCategory');
-    }
-    public function deleteCategory(Request $request){
-        $categoryId=$request->get('id');
-        $category= DB::table('categories')
-        ->where('id','=', $categoryId)
-        ->delete();
-        return redirect()->route('adminCategory');
-    }
-    public function editCategory(Request $request){
-        $categoryId=$request->get('id');
-       $myCategory=DB::table('categories')
-       ->where('id','=',$categoryId)
-       ->get()
-       ->toArray();
-        //dd($myCategory);
-        return view('admin/editCategory',compact('myCategory'));
-    }
-    public function editCategorySave(Request $request){
-    $id=$request->get('id');
-    $name=$request->get('name');
-    $type=$request->get('type');
-    //...................................................
-    $category = Category::find($id);
- 
-    $category->name = $name;
-    $category->type = $type;
-    $category->save();
 
         return redirect()->route('adminCategory');
     }
-    public function addDiscount(Request $request){
+    public function deleteCategory(Request $request)
+    {
+        //data from request
+        $categoryId = $request->get('id');
+
+        //delete from DB
+        $category = DB::table('categories')
+            ->where('id', '=', $categoryId)
+            ->delete();
+
+        return redirect()->route('adminCategory');
+    }
+    public function editCategory(Request $request)
+    {
+        $categoryId = $request->get('id');
+
+        $myCategory = DB::table('categories')
+            ->where('id', '=', $categoryId)
+            ->get()
+            ->toArray();
+
+        return view('admin/editCategory', compact('myCategory'));
+    }
+    public function editCategorySave(Request $request)
+    {
+
+        $id = $request->get('id');
+        $name = $request->get('name');
+        $type = $request->get('type');
+
+        //...................................................
+
+        $category = Category::find($id);
+        $category->name = $name;
+        $category->type = $type;
+        $category->save();
+
+        return redirect()->route('adminCategory');
+    }
+    public function addDiscount(Request $request)
+    {
         $discountPercent = $request->get('discountPercent');
-      
+
         Discount::create([
-            'discountPercent'=>$discountPercent,
+            'discountPercent' => $discountPercent,
         ]);
-        //dd($category);
+
         //..................................
         return redirect()->route('adminDiscount');
     }
 
-    public function deleteDiscount(Request $request){
-        $discountId=$request->get('id');
-        $discount= DB::table('discounts')
-        ->where('id','=', $discountId)
-        ->delete();
+    public function deleteDiscount(Request $request)
+    {
+        $discountId = $request->get('id');
+        $discount = DB::table('discounts')
+            ->where('id', '=', $discountId)
+            ->delete();
         return redirect()->route('adminDiscount');
+    }
+    public function editDisount(Request $request)
+    {
+        $discountId = $request->get('id');
+        $myDiscount = DB::table('discounts')
+            ->where('id', '=', $discountId)
+            ->get()
+            ->toArray();
 
+        return view('admin/editDiscount', compact('myDiscount'));
     }
-    public function editDisount(Request $request){
-        $discountId=$request->get('id');
-        $myDiscount=DB::table('discounts')
-        ->where('id','=',$discountId)
-        ->get()
-        ->toArray();
-         //dd($myCategory);
-         return view('admin/editDiscount',compact('myDiscount'));  
-    
-    }
-    public function editDiscountSave(Request $request){
-        $id=$request->get('id');
-    $discountPercent=$request->get('discountPercent');
-    //...................................................
-    $discount = Discount::find($id);
-    //dd($discount->discountPercent);
-    $discount -> discountPercent = $discountPercent;
-    $discount->save();
+    public function editDiscountSave(Request $request)
+    {
+        $id = $request->get('id');
+        $discountPercent = $request->get('discountPercent');
+
+        //...................................................
+        
+        $discount = Discount::find($id);
+        $discount->discountPercent = $discountPercent;
+        $discount->save();
 
         return redirect()->route('adminDiscount');
     }

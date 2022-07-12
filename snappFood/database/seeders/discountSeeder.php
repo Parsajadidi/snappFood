@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Discount;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,13 +16,23 @@ class discountSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('discounts')->insert(
-            ['discountPercent'=>0],
-            ['discountPercent'=>20],
-            ['discountPercent'=>25],
-            ['discountPercent'=>50],
-            ['discountPercent'=>33],
-            ['discountPercent'=>70],
+        Discount::create(
+            ['discountPercent'=>0]
+        );
+        Discount::create(
+            ['discountPercent'=>20]
+        );
+        Discount::create(
+            ['discountPercent'=>25]
+        );
+        Discount::create(
+            ['discountPercent'=>50]
+        );
+        Discount::create(
+            ['discountPercent'=>33]
+        );
+        Discount::create(
+            ['discountPercent'=>70]
         );
     }
 }

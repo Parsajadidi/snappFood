@@ -39,7 +39,7 @@ require __DIR__.'/auth.php';
 Route::middleware('auth')->group(function(){
     
 Route::middleware('admin')->group(function(){
-
+    //admin Routes
     Route::get('/admin/home',[siteController::class,'showAdminHome'])->name('adminHome');
     Route::get('/admin/categories',[siteController::class,'showAdminCategories'])->name('adminCategory');
     Route::get('/admin/discount',[siteController::class,'showAdminDiscount'])->name('adminDiscount');
@@ -55,7 +55,7 @@ Route::middleware('admin')->group(function(){
 });
 Route::middleware('seller')->group(function(){
 
-
+    //resturant Routes
     Route::get('/resturant/home',[siteController::class,'showResturantHome'])->name('resturantHome');
     Route::post('/resturant/home/update/status',[resturantController::class,'ResturantStatus']);
     Route::get('/resturant/profile',[resturantController::class,'showResturantProfile'])->name('resturantProfile');

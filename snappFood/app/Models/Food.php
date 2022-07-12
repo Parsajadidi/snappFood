@@ -11,7 +11,7 @@ class Food extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
+    protected $fillable = [
         'name',
         'price',
         'description',
@@ -25,10 +25,16 @@ class Food extends Model
     {
         return $this->belongsTo(Category::class);
     }
-    public function discount(){
-    return $this->belongsTo(Discount::class);
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class);
     }
-    public function rasturant(){
-    return $this->belongsTo(Resturant::class);
+    public function rasturant()
+    {
+        return $this->belongsTo(Resturant::class);
+    }
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
     }
 }

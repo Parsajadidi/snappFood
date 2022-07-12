@@ -120,10 +120,10 @@ adminPage
         <td class="px-6 py-4">
           {{$data[0][0]->category->name}}
         </td>
-        <td class="px-6 py-4 text-right">
+        <td class="px-6 py-4 ">
         {{$data[0][0]->bankAccount}}
         </td>
-        <td class="px-6 py-4 text-right">
+        <td class="px-6 py-4 ">
           <form action="/resturant/home/update/status" method="POST">
             @csrf
             <select name="status" id="">

@@ -51,7 +51,7 @@ resturantEditFood
                 @csrf
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                    <input class="w-3/4" type="text" value="{{$data[0][0]->name}}" name="name">
+                    <input class="text-gray-600 w-3/4" type="text" value="{{$data[0][0]->name}}" name="name">
                 </th>
                 <td class="px-6 py-4">
                     <input class="w-3/4"  type="number" name="price" value="{{$data[0][0]->price}}">

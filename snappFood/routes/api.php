@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\resturantController;
 
@@ -33,6 +34,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/addresses',[AddressController::class,'index']);
     Route::post('/addresses',[AddressController::class,'store']);
     Route::post('/addresses/{address_id}',[AddressController::class,'setActiveAddress']);
+
+    //carts
+    Route::get('/carts',[CartController::class,'index']);
+    Route::get('/carts/{cart_id}',[CartController::class,'show']);
+    Route::post('/cart/item/add',[CartController::class,'store']);
+    Route::patch('/cart/item/add',[CartController::class,'update']);
+    Route::post('/carts/{cart_id}/pay',[CartController::class,'pay']);
+
 
 //logout
     Route::post('/logout', [AuthController::class, 'logout']);

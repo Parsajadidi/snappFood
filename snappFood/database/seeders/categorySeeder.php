@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,20 +17,17 @@ class categorySeeder extends Seeder
     public function run()
     {
         //seeder for category ofFoods
-        DB::table('categories')->insert(
-            ['name' => 'pizza', 'type' => 'food'],
-            ['name' => 'salad',  'type' => 'food'],
-            ['name' => 'sandwich', 'type' => 'food'],
-            ['name' => 'pasta', 'type' => 'food'],
-            ['name' => 'kebab', 'type' => 'food'],
-        );
+        Category::create(['name' => 'pizza', 'type' => 'food']);
+        Category::create(['name' => 'salad',  'type' => 'food']);
+        Category::create(['name' => 'sandwich', 'type' => 'food']);
+        Category::create( ['name' => 'pasta', 'type' => 'food']);
+        Category::create( ['name' => 'kebab', 'type' => 'food']);
+
 
         //seeder for category of Resturants
-        DB::table('categories')->insert(
-            ['name' => 'fastFood', 'type' => 'resturant'],
-            ['name' => 'italian', 'type' => 'resturant'],
-            ['name' => 'french', 'type' => 'resturant'],
-            ['name' => 'iranian',  'type' => 'resturant']
-        );
+        Category::create(['name' => 'fastFood', 'type' => 'resturant']);
+        Category::create(['name' => 'italian', 'type' => 'resturant']);
+        Category::create(['name' => 'french', 'type' => 'resturant']);
+        Category::create(['name' => 'iranian',  'type' => 'resturant']);
     }
 }

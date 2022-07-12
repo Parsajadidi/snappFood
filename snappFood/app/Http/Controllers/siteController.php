@@ -21,7 +21,6 @@ class siteController extends Controller
         ->select('*')
         ->get()
         ->toArray();
-        //dd($categories);
         return view('admin/adminCategories',compact('categories'));
     
     }

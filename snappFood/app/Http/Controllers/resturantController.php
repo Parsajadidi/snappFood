@@ -35,32 +35,31 @@ class resturantController extends Controller
             ->select('*')
             ->get()
             ->toArray();
-        // dd($categories);
         return view('resturant.reseturantProfile', compact('categories'));
     }
     public function ResturantProfile(Request $request)
     {
         //validation
-        // $request->validate([
-        //     'name' => 'required|unique:resturants|max:20',
-        //     'phone' => 'required|unique:resturants',
-        //     'bankAccount' => 'required',
-        //     "type" => 'required',
-        //     'sat_start' => 'numeric|between:0,24',
-        //     'sat_end' => 'numeric|between:0,24',
-        //     'sun_start' => 'numeric|between:0,24',
-        //     'sun_end' => 'numeric|between:0,24',
-        //     'mon_start' => 'numeric|between:0,24',
-        //     'mon_end' => 'numeric|between:0,24',
-        //     'tue_start' => 'numeric|between:0,24',
-        //     'tue_end' => 'numeric|between:0,24',
-        //     'wed_start' => 'numeric|between:0,24',
-        //     'wed_end' => 'numeric|between:0,24',
-        //     'thu_start' => 'numeric|between:0,24',
-        //     'thu_end' => 'numeric|between:0,24',
-        //     'fri_start' => 'numeric|between:0,24',
-        //     'fri_end' => 'numeric|between:0,24',
-        // ]);
+        $request->validate([
+            'name' => 'required|unique:resturants|max:20',
+            'phone' => 'required|unique:resturants',
+            'bankAccount' => 'required',
+            "type" => 'required',
+            'sat_start' => 'numeric|between:0,24',
+            'sat_end' => 'numeric|between:0,24',
+            'sun_start' => 'numeric|between:0,24',
+            'sun_end' => 'numeric|between:0,24',
+            'mon_start' => 'numeric|between:0,24',
+            'mon_end' => 'numeric|between:0,24',
+            'tue_start' => 'numeric|between:0,24',
+            'tue_end' => 'numeric|between:0,24',
+            'wed_start' => 'numeric|between:0,24',
+            'wed_end' => 'numeric|between:0,24',
+            'thu_start' => 'numeric|between:0,24',
+            'thu_end' => 'numeric|between:0,24',
+            'fri_start' => 'numeric|between:0,24',
+            'fri_end' => 'numeric|between:0,24',
+        ]);
         //info
         $name = $request->get('name');
         $phone = $request->get('phone');
@@ -166,6 +165,10 @@ class resturantController extends Controller
     }
     public function ResturantAddFood(Request $request)
     {
+        $request->validate
+        ([
+        'price'=>'numeric',
+        ]);
 
         $foodName = $request->get('name');
         $foodPrice = $request->get('price');
@@ -206,9 +209,9 @@ class resturantController extends Controller
 
         $category = Category::where('type', 'food')->get();
         $discount = Discount::all();
-        // dd($category);
+        
         $data = [$food, $category, $discount];
-        // dd($data);
+
         return view('resturant/editFood', compact('data'));
     }
     public function ResturantMenu(Request $request)

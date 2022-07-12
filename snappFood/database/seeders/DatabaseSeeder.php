@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Database\Seeders\categorySeeder;
+use Database\Seeders\discountSeeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -37,5 +39,6 @@ class DatabaseSeeder extends Seeder
             'email' => "parsajad23@gmail.com",
             'password' => Hash::make("123")],
             ]);
+            $this->call([categorySeeder::class,discountSeeder::class]);
     }
 }
