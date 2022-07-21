@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/carts',[CartController::class,'index']);
     Route::get('/carts/{cart_id}',[CartController::class,'show']);
     Route::post('/cart/item/add',[CartController::class,'store']);
-    Route::patch('/cart/item/add',[CartController::class,'update']);
+    Route::put('/cart/item/{id}/update',[CartController::class,'update']);
     Route::post('/carts/{cart_id}/pay',[CartController::class,'pay']);
 
 

@@ -16,7 +16,8 @@ class CartItemResource extends JsonResource
     {
         return [
             'food'=>$this->food->name,
-            'number'=>$this->count
+            'number'=>$this->count,
+            'price'=>0.01*($this->food->price)*(100-($this->food->discount->discountPercent)),
         ];
     }
 }

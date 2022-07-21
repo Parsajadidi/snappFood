@@ -1,10 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\siteController;
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\resturantController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ResturantOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,12 @@ Route::middleware('seller')->group(function(){
     Route::post('/resturant/menu/delete/food',[resturantController::class,'ResturantDeleteFood']);
     Route::post('/resturant/menu/edit/food',[resturantController::class,'ResturantEditFood']);
     Route::post('/resturant/menu/edit/food/save',[resturantController::class,'ResturantEditFoodSave']);
+    Route::get('/resturant/orders',[ResturantOrderController::class,'showOrders'])->name('resturantOrders');
+    Route::post('/resturant/orders/info',[ResturantOrderController::class,'showOrdersInfo'])->name('resturantOrdersInfo');
+    Route::post('/resturant/orders/info/update',[ResturantOrderController::class,'OrdersInfoUpdate']);
+    Route::get('/resturant/archive',[ResturantOrderController::class,'showArchive'])->name('resturantOrderArchive');
+
+
 
 });
 });

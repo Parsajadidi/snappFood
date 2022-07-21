@@ -22,6 +22,16 @@
                         {{ __('MY MENU') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('resturantOrders')" :active="request()->routeIs('resturantOrders')">
+                        {{ __('ORDERS') }}
+                    </x-nav-link>
+                </div>
+                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('resturantOrderArchive')" :active="request()->routeIs('resturantOrderArchive')">
+                        {{ __('ARCHIVE') }}
+                    </x-nav-link>
+                </div>
                 @endcan
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('resturantProfile')" :active="request()->routeIs('resturantProfile')">

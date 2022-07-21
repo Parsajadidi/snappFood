@@ -20,7 +20,8 @@ class Food extends Model
         'category_id',
         'resturant_id'
     ];
-
+    protected $with=['discount'];
+    
     public function category()
     {
         return $this->belongsTo(Category::class);
