@@ -53,6 +53,11 @@ Route::middleware('admin')->group(function(){
     Route::post('/admin/discount/delete',[adminController::class,'deleteDiscount']);
     Route::post('/admin/discount/edit',[adminController::class,'editDisount']);
     Route::post('/admin/discount/edit/save',[adminController::class,'editDiscountSave']);
+    Route::get('/admin/comment/list',[adminController::class,'showComments'])->name('adminComments');
+    Route::post('/admin/comment/delete',[adminController::class,'deleteComment']);
+    Route::post('/admin/comment/accept',[adminController::class,'acceptComment']);
+
+    
 });
 Route::middleware('seller')->group(function(){
 
@@ -72,9 +77,13 @@ Route::middleware('seller')->group(function(){
     Route::post('/resturant/orders/info',[ResturantOrderController::class,'showOrdersInfo'])->name('resturantOrdersInfo');
     Route::post('/resturant/orders/info/update',[ResturantOrderController::class,'OrdersInfoUpdate']);
     Route::get('/resturant/archive',[ResturantOrderController::class,'showArchive'])->name('resturantOrderArchive');
+    Route::get('/resturant/comment/list',[resturantController::class,'showComments'])->name('resturantComments');
+    Route::post('/resturant/comment/deletereq',[resturantController::class,'commentDeleteReq']);
+    Route::post('/resturant/comment/accept',[resturantController::class,'commentAccept']);
+    Route::post('/resturant/comment/info',[resturantController::class,'commentInfo']);
+    Route::post('/resturant/comment/info/answer',[resturantController::class,'commentAnswer']);
 
-
-
+    
 });
 });
 

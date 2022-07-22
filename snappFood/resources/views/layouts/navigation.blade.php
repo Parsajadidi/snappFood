@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('adminCategory')" :active="request()->routeIs('adminCategory')">
                         {{ __('CATEGORY') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('adminComments')" :active="request()->routeIs('adminComments')">
+                        {{ __('COMMENTS') }}
+                    </x-nav-link>
                 </div>
             </div>
 

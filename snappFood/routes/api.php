@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\AddressController;
+use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\resturantController;
 
 /*
@@ -42,7 +43,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/cart/item/{id}/update',[CartController::class,'update']);
     Route::post('/carts/{cart_id}/pay',[CartController::class,'pay']);
     //comments
-    Route::get('/comments/{resturant_id}',[CommentController::class,'find']);
+    Route::get('/comments/{resturant_id}',[CommentController::class,'show']);
     Route::post('/comment',[CommentController::class,'store']);
 
 

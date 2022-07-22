@@ -13,7 +13,8 @@ class Comment extends Model
         'comment',
         'score',
         'answer',
-        'status'
+        'status',
+        'cart_id'
     ];
     protected $with=["cart"];
 

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Category;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Discount;
 
 class adminController extends Controller
 {
@@ -104,5 +105,26 @@ class adminController extends Controller
         $discount->save();
 
         return redirect()->route('adminDiscount');
+    }
+    public function showComments(){
+    
+        $comments = Comment::with(['cart' => fn ($cart) => $cart->with(['cartItems' => fn ($cartItem) => $cartItem->with('food')])])->where('status', 'deleteRequest')->get();
+
+        return view('admin/resturantComments', compact('comments'));
+    }
+    public function deleteComment(Request $request){
+    
+        $commentID = $request->comment_ID;
+        $comment = Comment::find($commentID);
+        $comment->status = 'acceptdeleteRequest';
+        $comment->save();
+        return redirect()->route('adminComments');
+    }
+    public function acceptComment(Request $request){
+        $commentID = $request->comment_ID;
+        $comment = Comment::find($commentID);
+        $comment->status = 'active';
+        $comment->save();
+        return redirect()->route('adminComments');
     }
 }

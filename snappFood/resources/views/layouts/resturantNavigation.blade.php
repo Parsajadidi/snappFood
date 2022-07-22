@@ -32,6 +32,17 @@
                         {{ __('ARCHIVE') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('resturantComments')" :active="request()->routeIs('resturantComments')">
+                        {{ __('COMMENTS') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('resturantOrderArchive')" :active="request()->routeIs('resturantOrderArchive')">
+                        {{ __('REPORTS') }}
+                    </x-nav-link>
+                </div>
+                
                 @endcan
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('resturantProfile')" :active="request()->routeIs('resturantProfile')">

@@ -14,10 +14,11 @@ class CommentResource extends JsonResource
      */
     public function toArray($request)
     {
-        $foods=$this->cart->cartItems->food;
+        $cartItems=$this->cart->cartItems;
+        
         $recFood=[];
-        foreach($foods as $key=>$food){
-            $recFood[]=[$key+1=>$food];
+        foreach($cartItems as $key=>$cartItem){
+            $recFood[$key+1]=$cartItem->food->name;
         }
         return [
             "id"=>$this->id,
@@ -26,7 +27,8 @@ class CommentResource extends JsonResource
             ],
             "foods"=>$recFood,
             "score"=>$this->score,
-            "content"=>$this->comment
+            "content"=>$this->comment,
+            "answer"=>$this->answer
         ];
     }
 }

@@ -24,17 +24,21 @@ class CommentController extends Controller
         $cart_ID=$request->cart_ID;
         $score=$request->score;
         $comment=$request->comment;
-        $cartUser=cart::find($cart_ID)->user_id;
+        $cartUser=cart::find($cart_ID);
         //............
-        if(auth()->user->id==$cartUser){
-            Comment::created([
-                'cart_id'=>$cart_ID,
-                'score'=>$score,
-                'comment'=>$comment
-            ]);
+        if(auth()->user()->id==$cartUser->user_id  ){
+            if($cartUser->is_pay == true){
 
+               $result= Comment::create([
+                    'cart_id'=>$cart_ID,
+                    'score'=>$score,
+                    'comment'=>$comment
+                ]);
+                
+                return ['massege'=> 'comment added '];
+            }
+            else return['massege'=>'undeliverded'];
         }else return abort(403);
-
     }
 
     /**
@@ -47,7 +51,7 @@ class CommentController extends Controller
     {
         //data
         $resturant_id=$resturant_id;
-        $comments=Comment::with(['cart'=>fn ($cart)=>$cart -> with('cartItems')])->whereRelation("cart","resturant_id" ,"=" ,$resturant_id);
+        $comments=Comment::with(['cart'=>fn ($cart)=>$cart -> with(['cartItems'=> fn ($cartItem) => $cartItem->with('food')])])->whereRelation("cart","resturant_id" ,"=" ,$resturant_id)->where('status','active')->get();
         //.....
         return  CommentResource::collection($comments);
     }

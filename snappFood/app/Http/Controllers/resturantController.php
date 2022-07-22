@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Food;
+use App\Models\Comment;
 use App\Models\Category;
 use App\Models\Discount;
 use App\Models\Schedule;
@@ -13,9 +14,10 @@ use illuminate\Validation\validator;
 
 class resturantController extends Controller
 {
-    public function ResturantStatus(Request $request){
-    
-        $status=$request->get('status');
+    public function ResturantStatus(Request $request)
+    {
+
+        $status = $request->get('status');
         //update status
         Resturant::where('user_id', auth()->user()->id)->update([
             'is_open' => $status,
@@ -23,7 +25,6 @@ class resturantController extends Controller
         ]);
 
         return redirect()->route('resturantHome');
-
     }
 
     public function showResturantProfile()
@@ -165,10 +166,9 @@ class resturantController extends Controller
     }
     public function ResturantAddFood(Request $request)
     {
-        $request->validate
-        ([
-        'price'=>'numeric',
-        ]);
+        $request->validate([
+                'price' => 'numeric',
+            ]);
 
         $foodName = $request->get('name');
         $foodPrice = $request->get('price');
@@ -209,7 +209,7 @@ class resturantController extends Controller
 
         $category = Category::where('type', 'food')->get();
         $discount = Discount::all();
-        
+
         $data = [$food, $category, $discount];
 
         return view('resturant/editFood', compact('data'));
@@ -256,5 +256,45 @@ class resturantController extends Controller
         $food->description = $foodDescription;
         $food->save();
         return redirect()->route('resturantMenu');
+    }
+    public function showComments()
+    {
+        $comments = Comment::with(['cart' => fn ($cart) => $cart->with(['cartItems' => fn ($cartItem) => $cartItem->with('food')])])->whereRelation("cart", "resturant_id", "=", auth()->user()->resturant->id)->where('status', 'waiting')->get();
+
+        return view('resturant/resturantComments', compact('comments'));
+    }
+    public function commentDeleteReq(Request $request)
+    {
+        $commentID = $request->comment_ID;
+        $comment = Comment::find($commentID);
+        $comment->status = 'deleteRequest';
+        $comment->save();
+        return redirect()->route('resturantComments');
+    }
+    public function commentAccept(Request $request)
+    {
+        $commentID = $request->comment_ID;
+        $comment = Comment::find($commentID);
+        $comment->status = 'active';
+        $comment->save();
+        return redirect()->route('resturantComments');
+    }
+    public function commentInfo(Request $request)
+    {
+       
+        $commentID = $request->comment_ID;
+        
+        $comment=$comments = Comment::with(['cart' => fn ($cart) => $cart->with(['cartItems' => fn ($cartItem) => $cartItem->with('food')])])->find($commentID);
+        return view('resturant/resturantCommentInfo',compact('comment'));
+    }
+    public function commentAnswer(Request $request){
+        $commentID = $request->comment_ID;
+        $answer=$request->answer;
+        $comment = Comment::find($commentID);
+        $comment->answer = $answer;
+        $comment->save();
+        return redirect()->route('resturantComments');
+
+    
     }
 }
