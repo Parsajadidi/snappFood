@@ -15,7 +15,8 @@ class CartItem extends Model
         'food_id'
     ];
 
-
+    protected $with=['food'];
+    
     public function cart()
     {
         return  $this->belongsTo(Cart::class);

@@ -41,6 +41,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/cart/item/add',[CartController::class,'store']);
     Route::put('/cart/item/{id}/update',[CartController::class,'update']);
     Route::post('/carts/{cart_id}/pay',[CartController::class,'pay']);
+    //comments
+    Route::get('/comments/{resturant_id}',[CommentController::class,'find']);
+    Route::post('/comment',[CommentController::class,'store']);
 
 
 //logout

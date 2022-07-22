@@ -17,6 +17,8 @@ class Cart extends Model
         'resturant_id',
         'user_id'
     ];
+    protected $with=['user'];
+
     public function user()
     {
 
@@ -34,5 +36,8 @@ class Cart extends Model
     public function cartItems()
     {
         return  $this->hasMany(CartItem::class);
+    }
+    public function comment(){
+        return $this->hasOne(Comment::class);
     }
 }
