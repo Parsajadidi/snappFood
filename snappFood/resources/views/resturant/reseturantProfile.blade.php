@@ -15,9 +15,9 @@ resturantProfile
 <form action="/resturant/profile/save" method="POST">
   @csrf
   <div class=" grid h-screen place-items-center">
-    <input class="my-2 rounded-lg" type="text" value="{{old('name')}}" name="name" placeholder="Resturant name" required>
-    <input class="my-2 rounded-lg" type="number" name="phone" placeholder="Resturant phone" required>
-    <input class="my-2 rounded-lg" type="number" name="bankAccount" placeholder="Resturant bankAccount " required>
+    <input class="my-2 rounded-lg" type="text" value="{{old('name')?? $resturantInfo->name ??'enter name'}}" name="name" placeholder="Resturant name"  required>
+    <input class="my-2 rounded-lg" type="number" name="phone" value="{{old('name')?? $resturantInfo->phone ??'enter phone'}}" required>
+    <input class="my-2 rounded-lg" type="number" name="bankAccount" value="{{old('name')?? $resturantInfo->bankAccount ??'enter banck Account'}}" placeholder="Resturant bankAccount " required>
     <label class="my-10" for="5">Choose type for your resturant</label>
     <select class="mb-10" name="type" id="5" required>
       @foreach($categories as $category)

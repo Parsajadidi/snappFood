@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Food;
 use App\Models\Comment;
 use App\Models\Category;
@@ -9,7 +10,9 @@ use App\Models\Discount;
 use App\Models\Schedule;
 use App\Models\Resturant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use illuminate\Validation\validator;
 
 class resturantController extends Controller
@@ -36,6 +39,13 @@ class resturantController extends Controller
             ->select('*')
             ->get()
             ->toArray();
+
+
+        if (Gate::allows('created_resturant')) {
+            $resturantInfo = Resturant::where('user_id', auth()->user()->id)->first();
+            return view('resturant.reseturantProfile', compact('resturantInfo','categories'));
+        }
+
         return view('resturant.reseturantProfile', compact('categories'));
     }
     public function ResturantProfile(Request $request)
@@ -167,8 +177,8 @@ class resturantController extends Controller
     public function ResturantAddFood(Request $request)
     {
         $request->validate([
-                'price' => 'numeric',
-            ]);
+            'price' => 'numeric',
+        ]);
 
         $foodName = $request->get('name');
         $foodPrice = $request->get('price');
@@ -259,7 +269,7 @@ class resturantController extends Controller
     }
     public function showComments()
     {
-        $comments = Comment::with(['cart' => fn ($cart) => $cart->with(['cartItems' => fn ($cartItem) => $cartItem->with('food')])])->whereRelation("cart", "resturant_id", "=", auth()->user()->resturant->id)->where('status', 'waiting')->get();
+        $comments = Comment::with(['cart' => fn ($cart) => $cart->with(['cartItems' => fn ($cartItem) => $cartItem->with('food')])])->whereRelation("cart", "resturant_id", "=", auth()->user()->resturant->id)->where('status', 'waiting')->orderBy('created_at', 'desc')->get();
 
         return view('resturant/resturantComments', compact('comments'));
     }
@@ -281,20 +291,85 @@ class resturantController extends Controller
     }
     public function commentInfo(Request $request)
     {
-       
+
         $commentID = $request->comment_ID;
-        
-        $comment=$comments = Comment::with(['cart' => fn ($cart) => $cart->with(['cartItems' => fn ($cartItem) => $cartItem->with('food')])])->find($commentID);
-        return view('resturant/resturantCommentInfo',compact('comment'));
+
+        $comment = $comments = Comment::with(['cart' => fn ($cart) => $cart->with(['cartItems' => fn ($cartItem) => $cartItem->with('food')])])->find($commentID);
+        return view('resturant/resturantCommentInfo', compact('comment'));
     }
-    public function commentAnswer(Request $request){
+    public function commentAnswer(Request $request)
+    {
         $commentID = $request->comment_ID;
-        $answer=$request->answer;
+        $answer = $request->answer;
         $comment = Comment::find($commentID);
         $comment->answer = $answer;
         $comment->save();
         return redirect()->route('resturantComments');
+    }
+    public function sumfinalPrice($a)
+    {
+        $Earn = 0;
+        foreach ($a as $b) {
+            $Earn += (float)$b->payment->finalPrice;
+        }
+        return $Earn;
+    }
+    public function showReports()
+    {
+        //carbon data
+        $yesterday = Carbon::yesterday()->format('Y-m-d H:i:s');
+        $twoDayAgo = Carbon::now()->subDay(2)->format('Y-m-d H:i:s');
+        $threeDayAgo = Carbon::now()->subDay(3)->format('Y-m-d H:i:s');
+        $fourDayAgo = Carbon::now()->subDay(4)->format('Y-m-d H:i:s');
+        $fiveDayAgo = Carbon::now()->subDay(3)->format('Y-m-d H:i:s');
+        $sixDayAgo = Carbon::now()->subDay(6)->format('Y-m-d H:i:s');
+        $sevenDayAgo = carbon::now()->subDays(7)->format('Y-m-d H:i:s');
+        $lastMonth = carbon::now()->subMonth()->format('Y-m-d H:i:s');
+        $lastYear = carbon::now()->subYear()->format('Y-m-d H:i:s');
+        $lastYear2 = date("Y-m-d H:i:s", time() - 43200 * 60);
 
-    
+        //resturantdata
+        $allTimeCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->get();
+        $lastYearCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->where('created_at', '>=', $lastYear)->get();
+        $lastMonthCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->where('created_at', '>=', $lastMonth)->get();
+        $lastWeekCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->where('created_at', '>=', $sevenDayAgo)->get();
+        $yesterdayCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->where('created_at', '>=', $yesterday)->get();
+        $twoDayAgoCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->where('created_at', '>=', $twoDayAgo)->where('created_at', '<=', $yesterday)->get();
+        $threeDayAgoCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->where('created_at', '>=', $threeDayAgo)->where('created_at', '<=', $twoDayAgo)->get();
+        $fourDayAgoCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->where('created_at', '>=', $fourDayAgo)->where('created_at', '<=', $threeDayAgo)->get();
+        $fiveDayAgoCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->where('created_at', '>=', $fiveDayAgo)->where('created_at', '<=', $fourDayAgo)->get();
+        $sixDayAgoCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->where('created_at', '>=', $sixDayAgo)->where('created_at', '<=', $fiveDayAgo)->get();
+        $sevenDayAgoCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->where('created_at', '>=', $sevenDayAgo)->where('created_at', '<=', $sixDayAgo)->get();
+        //earn data  
+        $allTimeEarn = $this->sumfinalPrice($allTimeCarts);
+        $lastYearEarn = $this->sumfinalPrice($lastYearCarts);
+        $lastMonthEarn = $this->sumfinalPrice($lastMonthCarts);
+        $lastWeekEarn = $this->sumfinalPrice($lastWeekCarts);
+        $yesterdayEarn = $this->sumfinalPrice($yesterdayCarts);
+        $twoDayAgoEarn = $this->sumfinalPrice($twoDayAgoCarts);
+        $threeDayAgoEarn = $this->sumfinalPrice($threeDayAgoCarts);
+        $fourDayAgoEarn = $this->sumfinalPrice($fourDayAgoCarts);
+        $fiveDayAgoEarn = $this->sumfinalPrice($fiveDayAgoCarts);
+        $sixDayAgoEarn = $this->sumfinalPrice($sixDayAgoCarts);
+        $sevenDayAgoEarn = $this->sumfinalPrice($sevenDayAgoCarts);
+
+
+
+        // return $allTimeEarn;
+
+        $data = [
+            'allTimeEarn' => $allTimeEarn,
+            'lastYearEarn' => $lastYearEarn,
+            'lastMonthEarn' => $lastMonthEarn,
+            'lastWeekEarn' => $lastWeekEarn,
+            'yesterdayEarn' => $yesterdayEarn,
+            'twoDayAgoEarn' => $twoDayAgoEarn,
+            'threeDayAgoEarn' => $threeDayAgoEarn,
+            'fourDayAgoEarn' => $fourDayAgoEarn,
+            'fiveDayAgoEarn' => $fiveDayAgoEarn,
+            'sixDayAgoEarn' => $sixDayAgoEarn,
+            'sevenDayAgoEarn' => $sevenDayAgoEarn,
+        ];
+        return view('resturant/resturantReports', compact('data'));
     }
 }

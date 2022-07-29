@@ -37,4 +37,10 @@ class ResturantOrderController extends Controller
 
         return view('resturant/resturantArchive', compact('carts'));
     }
+    public function archiveInfo(Request $request){
+        $cart_ID = $request->get('cart_ID');
+        $cart = Cart::with(['user', 'payment', 'cartItems' => fn ($cartItem) => $cartItem->with('food')])->find($cart_ID)->toArray();
+        return view('resturant/resturantArchiveInfo', compact('cart'));
+    
+    }
 }

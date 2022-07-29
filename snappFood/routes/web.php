@@ -77,11 +77,13 @@ Route::middleware('seller')->group(function(){
     Route::post('/resturant/orders/info',[ResturantOrderController::class,'showOrdersInfo'])->name('resturantOrdersInfo');
     Route::post('/resturant/orders/info/update',[ResturantOrderController::class,'OrdersInfoUpdate']);
     Route::get('/resturant/archive',[ResturantOrderController::class,'showArchive'])->name('resturantOrderArchive');
+    Route::post('/resturant/archive/info',[ResturantOrderController::class,'archiveInfo']);
     Route::get('/resturant/comment/list',[resturantController::class,'showComments'])->name('resturantComments');
     Route::post('/resturant/comment/deletereq',[resturantController::class,'commentDeleteReq']);
     Route::post('/resturant/comment/accept',[resturantController::class,'commentAccept']);
     Route::post('/resturant/comment/info',[resturantController::class,'commentInfo']);
     Route::post('/resturant/comment/info/answer',[resturantController::class,'commentAnswer']);
+    Route::get('/resturant/reports',[resturantController::class,'showReports'])->name('resturantReports');
 
     
 });

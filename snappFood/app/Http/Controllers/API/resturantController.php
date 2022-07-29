@@ -48,4 +48,5 @@ class resturantController extends Controller
 
         return  FoodResource::collection(Food::where('resturant_id', $resturant_id)->get());
     }
+  
 }

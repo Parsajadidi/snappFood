@@ -92,7 +92,7 @@ class CartController extends Controller
 
        $cart= Cart::with('cartItems')->where('id',$cartID)->first()->cartItems;
 
-        if($count === 0 ){
+        if($count == 0 ){
 
             $cartItem->delete();
             if($cart->isEmpty()){
