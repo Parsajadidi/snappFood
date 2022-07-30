@@ -56,6 +56,7 @@ Route::middleware('admin')->group(function(){
     Route::get('/admin/comment/list',[adminController::class,'showComments'])->name('adminComments');
     Route::post('/admin/comment/delete',[adminController::class,'deleteComment']);
     Route::post('/admin/comment/accept',[adminController::class,'acceptComment']);
+    Route::get('/admin/reports',[adminController::class,'showReports'])->name('adminReports');
 
     
 });

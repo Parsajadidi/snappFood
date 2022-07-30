@@ -38,7 +38,7 @@ class AddressController extends Controller
             'latitiude' => $request->latitiude,
             'longitude' => $request->longitude,
             'addressable_id' => auth()->id(),
-            'addressable_type' => 'buyer',
+            'addressable_type' => 'App\Models\User',
         ]);
         $respone = ['message' => 'address added'];
         return response($respone);

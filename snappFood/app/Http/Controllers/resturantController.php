@@ -326,7 +326,6 @@ class resturantController extends Controller
         $sevenDayAgo = carbon::now()->subDays(7)->format('Y-m-d H:i:s');
         $lastMonth = carbon::now()->subMonth()->format('Y-m-d H:i:s');
         $lastYear = carbon::now()->subYear()->format('Y-m-d H:i:s');
-        $lastYear2 = date("Y-m-d H:i:s", time() - 43200 * 60);
 
         //resturantdata
         $allTimeCarts = Cart::with(['payment'])->where('is_pay', true)->where('resturant_id', auth()->user()->resturant->id)->whereRelation("payment", "staus", "=", "delivered")->get();
